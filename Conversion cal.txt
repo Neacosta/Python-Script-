@@ -1,0 +1,153 @@
+__author__ = "Nelson Acosta"
+
+# This program converts dollar into pesos
+
+# Input list: trade_money, id_message
+# Output list: text
+
+# Function Boolean String_validation(String trade_money)
+#    Declare Real x
+#    Declare Boolean is_valid
+#
+#    Try:
+#       Set x = Float(trade_money)
+#       is_valid = True
+#    Except ValueError:
+#       Set is_valid = False
+#    Return is_valid
+# End Function
+
+def string_validation(trade_money):
+    x = 0.0
+    is_valid = True
+
+    try:
+       x = float(trade_money)
+       is_valid = True
+    except ValueError:
+        is_valid = False
+    return is_valid
+
+# Function String input_validation(String id_message)
+#    While id_message.upper() != "YES" and id_message.upper() != "NO"
+#        Display "please enter Yes or No. "
+#        Input id_message
+#
+#     Return id_message
+
+def input_validation(id_message):
+    while id_message.upper() != "YES" and id_message.upper() != "NO":
+        id_message = input("Please enter Yes or No. ")
+
+    return id_message
+
+
+# Module output_amount(string text)
+#    Display text
+# End module
+
+def output_amount(text):
+    print(text)
+
+# Function String message(String final_amount)
+#    Declare string text
+
+#    Set text = " You would have " + Str(final_amount) + " pesos. "
+#    Return text
+# End Function
+
+def message(final_amount):
+    text = ""
+
+    text = " You would have "+ str(final_amount) + " pesos."
+    return text
+
+
+# Function String input_trade_money()
+#    Declare String trade_money
+#
+#    Set trade_money = Input(("Amount of money that you would like to trade? "))
+#    While string_validation(trade_money) != True
+#       Set trade_money = Input(("Amount of money that you would like to trade? "))
+#
+#    Return trade_money
+# End Function
+
+def input_trade_money():
+    trade = ""
+
+    trade = input("Amount of money that you would like to trade? ")
+    while string_validation(trade) != True:
+        trade = input("Amount of money that you would like to trade? ")
+
+    return trade
+
+
+# Module amount()
+#    Declare Real final_amount[SIZE]
+#    Declare String text, id_message
+#    Constant Real DOLLAR_VALUE = 45.0
+#    Constant Integer SIZE = 100
+#    Declare Real trade_money[SIZE]
+#    Declare Real count = 0
+#    Declare Real index
+#
+#    id_message = Str(Input("Do you have ID? "))
+#        If id_message.upper() == "NO" Then
+#           Display "We cannot trade your money without ID. "
+#        Return
+#    End If
+#
+#    While id_message.upper() == "YES" AND count < SIZE
+#        Set trade_money[count]= Float(input_trade_money())
+#        Set final_amount[count] = trade_money[count] * DOLLAR_VALUE
+#        Set text = message(final_amount[count])
+#        Call output_amount(text)
+#        Set id_message = Str(Input("Would you like to continue?"))
+#        Set id_message = input_validation(id_message)
+#        Count = count + 1
+#    End While
+#    Display "here are the values that you entered."
+#    Display "Dollars" Tab "Pesos"
+#    Display "--------------"
+#    For index = 0 to count -1
+#        Display trade_money[index]
+#    End For
+#    display "Goodbye."
+# End Module
+
+def amount():
+    SIZE = 100
+    trade_money = [0]*SIZE
+    count = 0
+    index = 0
+    final_amount = [0]*SIZE
+    text = ""
+    id_message = ""
+    DOLLAR_VALUE = 45.0
+
+    id_message = str(input("Do you have ID? "))
+    if id_message.upper() != "YES":
+        print("We cannot trade your money without ID. ")
+        return
+
+    while id_message.upper() == "YES" and count < SIZE:
+        trade_money[count] = float(input_trade_money())
+        final_amount[count] = trade_money[count] * DOLLAR_VALUE
+        text = message(final_amount[count])
+        output_amount(text)
+        id_message = str(input("Would you like to continue? "))
+        id_message = input_validation(id_message)
+        count = count + 1
+    print("here are the values that you entered.")
+    print("Dollars", end="  ")
+    print("Pesos")
+    print("--------------")
+    for index in range(count):
+        print(trade_money[index], end="     ")
+        print(final_amount[index])
+
+    print("Goodbye.")
+
+amount()
+
